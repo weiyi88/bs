@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户添加</title>
+</head>
+<link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+<link rel="Shortcut Icon" href="" type="image/x-icon" />
+<script src="/layui/layui.js" charset="utf-8"></script>
+<body>
+<div class="layui-form-item">
+
+    <form class="layui-form layui-form-pane" action="" id="form" enctype="multipart/form-data">
+
+        <input type="hidden" name="dopost" value="update">
+        <input type="hidden" name="act" value="save">
+        <input type="hidden" name="id" value="">
+        <input type="hidden" name="uptime" value="" >
+        <input type="hidden" name="username" value=""  placeholder="请输入" autocomplete="off" class="layui-input" >
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" value=""  placeholder="请输入" autocomplete="off"  class="layui-input" >
+            </div>
+            <div class="layui-form-mid layui-word-aux">注册后不允许修改</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" value=""   placeholder="请输入" autocomplete="off" class="layui-input" >
+            </div>
+            <div class="layui-form-mid layui-word-aux">填写报名时学号</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-inline">
+                <input type="text" name="department" value=""   placeholder="请输入" autocomplete="off" class="layui-input" >
+            </div>
+            <div class="layui-form-mid layui-word-aux">所属部门</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password1" value="" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">请务必填写密码</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password2" value="" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">两次输入必须相同</div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="rankadd" style="pointer-events: auto;">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+
+
+
+
+
+
+
+
+    <!-- <script src="edit/ueditor.config.js" language="javascript" type="text/javascript"></script>
+    <script src="edit/ueditor.all.min.js" language="javascript" type="text/javascript"></script>
+    <script src="edit/lang/zh-cn/zh-cn.js" language="javascript" type="text/javascript"></script> -->
+    <script>
+        layui.use(['form','laypage','layer','upload'], function(){
+            var $ = layui.jquery,upload = layui.upload,form = layui.form;
+
+
+            //设定文件大小限制
+            upload.render({
+                elem: '#test1'
+                ,url: '../Upload/upload'
+                ,size: 10240 //限制文件大小，单位 KB
+                ,done: function(res){
+                    if(res.code==1){
+                        $("#pic").val('/'+res.data.url);
+                        $("#pic_r").attr("src",'/'+res.data.url);
+                    }else{
+                        layer.alert(res.msg,{icon: 5});
+                    }
+                    // console.log(res.data.url)
+                }
+            });
+
+
+            form.render();
+            form.on('submit(rankadd)', function(data) {
+                $.ajax({
+                    url:"adminedit",
+                    data:$('#form').serialize(),
+                    type:"post",
+                    dataType:"json",
+                    success:function(data){
+                        if(data.code=='0'){
+                            layer.alert(data.msg, {icon: 6},function(index){
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index)
+                            });
+                        }else if(data.code=='2'){
+                            layer.alert(data.msg, {icon: 5});
+                        }
+                        else
+                        {
+                            layer.alert(data.msg, {icon: 5});
+                        }
+                    },
+                    error:function(data){
+                        layer.alert('请稍后重试', {icon: 5});
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户添加</title>
+</head>
+<link rel="Shortcut Icon" href="" type="image/x-icon" />
+<link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+<script src="/layui/layui.js" charset="utf-8"></script>
+<style type="text/css">
+    .layui-word-aux{
+        color: red;
+    }
+</style>
+<body>
+<div class="layui-form-item">
+    <!-- 用户信息 开始-->
+
+    <form class="layui-form" action="" id="form" enctype="multipart/form-data">
+        <input type="hidden" name="dopost" value="update">
+        <input type="hidden" name="act" value="save">
+        <input type="hidden" name="id" value="">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" value="{$name}" placeholder="" disabled autocomplete="off" class="layui-input" >
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="color: red;"> </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phone" value="{$phone}" placeholder="" disabled autocomplete="off"  class="layui-input" >
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="color: red;"> </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-inline">
+                <input type="text" name="content" value="{$content}" disabled placeholder="" autocomplete="off" class="layui-input" >
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="color: red;"> </div>
+        </div>
+
+        <input type="hidden" name="location" value="">
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit="" id="yiyue" value="yiyue" onclick="yiyue()" lay-filter="rankadd" style="pointer-events: auto;">已阅</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    layui.use(['form','laypage','layer','upload'], function(){
+        var $ = layui.jquery,upload = layui.upload,form = layui.form;
+
+
+
+        form.render();
+        form.on('submit(rankadd)', function(data) {
+            console.log(data);
+            $.ajax({
+                url:"/admin/report/liuyanedit",
+                data:$('#form').serialize(),
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    console.log(data.code);
+                    if(data.code=='0'){
+                        $.ajax({
+                            url:"/admin/report/liuyanedit",
+                            data:yiyue='yiyue',
+                            type:"post",
+                            dataType:"json",
+                            success:function () {
+
+                                layer.alert(data.msg, {icon: 5});
+                            }
+                        });
+
+                    }else if(data.code=='2'){
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                    else
+                    {
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                },
+                error:function(data){
+                    // console.log(data);
+                    layer.alert('请稍后重试', {icon: 5});
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>66666</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="Shortcut Icon" href="" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+</head>
+<body>
+
+<script src="/layui/layui.js" charset="utf-8"></script>
+<h1>建议管理员谨慎修改</h1>
+
+
+<a href="javascript:;" class="layui-btn layui-btn-small" id="refresh">
+    <i class="layui-icon"></i> 刷新
+</a>
+<table class="layui-hide" id="test" lay-filter='test3'></table>
+<div class="admin-table-page">
+    <div id="page" class="page">
+    </div>
+</div>
+
+<script>
+    layui.use(['element','laypage','table','laydate'], function(){
+        var $ = layui.jquery,laypage = layui.laypage,table = layui.table;
+        var date = layui.laydate;
+        laypage.render({
+            elem: 'page',//显示按钮和页数的DIV
+            count:{$count},//读取出数据的总数
+            limit: 10,//每个页面显示的页数
+            curr: location.hash.replace('#!fenye=', ''),//开启location.hash的记录
+            hash: 'fenye',//自定义hash值
+            groups: 10,//连续出现的页码个数
+            layout: ['prev', 'page', 'next', 'count'],
+            jump: function(obj, first) {  //切换分页的回调
+                var curr = obj.curr;
+                table.render({
+                    elem: '#test'
+                    ,url:'/admin/member/zx'
+                    ,size: 'lg' //小尺寸的表格
+                    ,method:'post'
+                    ,title: '资讯列表'
+                    ,where:{dopost:'zx',page:curr}
+                    ,cellMinWidth: 80
+                    ,cols: [[
+                        {field:'id', title: 'ID', width:80, sort: true, fixed: 'left' }
+                        ,{field:'img', width:80,title: '图片',align: "center",
+                            templet:function (item) { return '<img src='+item.img+' width="40px" height="40px">' }}
+                        ,{field:'name', width:120, title: '名称',align: "center"}
+                        ,{field:'sex', width:80, title: '性别',align: "center"}
+                        ,{field:'department', width:120, title: '部门',align: "center"}
+                        ,{field:'student_id', width:120, title: '学号',align: "center"}
+                        ,{field:'major', width:150, title: '专业',align: "center"}
+                        ,{field:'phone', width:200, title: '电话',align: "center"}
+                        ,{field:'email', width:200, title: '邮箱',align: "center"}
+                        ,{field:'des', width:300, title: '自我介绍',align: "center"}
+                        ,{field:'state', width:80, title: '状态',align:'center',fixed: 'right',
+                            templet:function (item)
+                            {
+                                if(item.state=="2")
+                                {
+                                    return '<div style=" color :green; ">新成员</div>'
+                                }
+                                if (item.state=="-1"){
+                                    return '<div style=" color :red; ">已拒绝</div>'
+                                }
+                            }
+                        }
+
+                        ,{ width:140, title: '查看/操作',align: "center",fixed: 'right',templet:function (item)
+                            {
+                                return '<a href="javascript:;" class="layui-btn layui-btn-mini"  data-id="'+item.id+'" id="edit">编辑</a>'
+                            }
+                        }
+
+                    ]]
+                    ,page: false
+                })
+            }
+        });
+
+        $('#layui-laypage-1 a').on('click', function() {
+            location.reload();
+        });
+        // 刷新
+        $('#refresh').on('click', function() {
+            location.reload();
+        });
+
+
+        $('tbody').on('click',"#edit", function() {
+
+            var id = $(this).attr('data-id');//获取了data-id="'+item.id+'"的值
+            layer.open({
+                type: 2,
+                title:"编辑",
+                area: ['80%', '90%'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: 'zxedit?dopost=update&id='+id,
+                end: function () {
+                    location.reload();
+                }
+            })
+
+        });
+
+
+    });
+</script>
+</body>
+</html>

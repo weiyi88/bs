@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户添加</title>
+</head>
+<link rel="Shortcut Icon" href="" type="image/x-icon" />
+<link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+<script src="/layui/layui.js" charset="utf-8"></script>
+<script src="/public/jquery1.11.3.min.js"></script>
+
+<body>
+<div class="layui-form-item">
+    <!-- 用户信息 开始-->
+    <form class="layui-form" action="" id="form" enctype="multipart/form-data">
+        <input type="hidden" name="dopost" value="update">
+        <input type="hidden" name="act" value="save">
+        <input type="hidden" name="create_time" value="">
+        <input type="hidden" name="id" value="">
+        <input type="hidden" name="user_id" value="">
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">缩略图</label>
+            <div class="layui-input-inline">
+                <img class="layui-img" src="{$img}" id="pic_r" width="auto" height="150px"/>
+                <input type="hidden" name="pic" value="{$img}" id="pic">
+                <button type="button" class="layui-btn layui-btn-danger" id="test1"><i class="layui-icon"></i>上传图片</button>
+                <div class="layui-inline layui-word-aux">
+                    缩略图不能大于10M
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="community" value="{$title}" disabled placeholder="名称" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <input type="text" name="community" value="{$sex}" disabled placeholder="性别" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-inline">
+                <input type="text" name="community" value="{$department}" disabled placeholder="部门" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="community" value="{$student_id}" disabled placeholder="学号" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label">专业</label>
+            <div class="layui-input-inline">
+                <input type="text" name="community" value="{$major}" disabled placeholder="专业" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="community" value="{$phone}" disabled placeholder="电话" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" name="community" value="{$email}" disabled placeholder="邮箱" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label">自我介绍</label>
+            <div class="layui-input-inline">
+                <textarea  id="" cols="50" rows="50" name="community"  placeholder="自我介绍" class="layui-input layui-form-danger" style="width: 500px;" >{$des}</textarea>
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input type="text" name="community" disabled value="<?php  if ($msg["state"]=='1'){echo "已录用"; } if ($msg["state"]=='2'){ echo "招新待处理"; } else{ echo "已拒绝"; }    ?>" placeholder="状态" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="luyong" style="pointer-events: auto;">录用</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="jujue" style="pointer-events: auto;">拒绝</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="quxiao" style="pointer-events: auto;">取消</button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/edit/ueditor.config.js" language="javascript" type="text/javascript"></script>
+<script src="/edit/ueditor.all.min.js" language="javascript" type="text/javascript"></script>
+<script src="/edit/lang/zh-cn/zh-cn.js" language="javascript" type="text/javascript"></script>
+
+<script>
+    layui.use(['form','laypage','layer','upload'], function(){
+        var $ = layui.jquery,upload = layui.upload,form = layui.form;
+        //设定文件大小限制
+        upload.render({
+            elem: '#test1'
+            ,url: '../upload/upload?dopost=member'
+            ,size: 10240 //限制文件大小，单位 KB
+            ,done: function(res){
+                if(res.code==1){
+                    $("#pic").val('/'+res.data.url);
+                    $("#pic_r").attr("src",'/'+res.data.url);
+                    layer.alert(res.msg,{icon: 6});
+                }else{
+                    layer.alert(res.msg,{icon: 5});
+                }
+                // console.log(res.data.url)
+            }
+        });
+
+
+        form.render();
+        form.on('submit(luyong)', function(data) {
+            console.log(data);
+            $.ajax({
+                url:"zxpd",
+                data:{"dopost":"luyong","id":"{$id}"},
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    console.log(data.code);
+                    if(data.code=='0'){
+                        layer.alert(data.msg, {icon: 6},function(index){
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index)
+                        });
+
+                    }else if(data.code=='2'){
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                    else
+                    {
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                },
+                error:function(data){
+                    // console.log(data);
+                    layer.alert('请稍后重试', {icon: 5});
+                }
+            });
+            return false;
+        });
+
+        form.on('submit(jujue)', function(data) {
+            console.log(data);
+            $.ajax({
+                url:"zxpd",
+                data:{"dopost":"jujue","id":"{$id}"},
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    console.log(data.code);
+                    if(data.code=='0'){
+                        layer.alert(data.msg, {icon: 6},function(index){
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index)
+                        });
+
+                    }else if(data.code=='2'){
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                    else
+                    {
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                },
+                error:function(data){
+                    // console.log(data);
+                    layer.alert('请稍后重试', {icon: 5});
+                }
+            });
+            return false;
+        });
+
+
+        form.on('submit(quxiao)', function(data) {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);//关闭当前页
+        });
+
+
+    });
+</script>
+
+</body>
+</html>

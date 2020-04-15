@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <title>网络公司-产品</title>
+    <link rel="stylesheet" href="/res/layui/css/layui.css">
+    <link rel="stylesheet" href="/res/static/css/index.css">
+</head>
+
+<style>
+    .bg{
+
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.2);
+        z-index: 99;
+
+    }
+    .login{
+        /*水平居中屏幕效果*/
+        position: fixed;
+        line-height: 40px;
+        width: 300px;
+        height: 120px;
+        margin-left: -150px;
+        /*先让盒子居中50%，再距离自己宽度一半*/
+        top: 200px;
+        left: 50%;
+        background-color: white;
+    }
+</style>
+
+<script>
+ function back() {
+        document.getElementById('bg').style.display='block';
+ }
+
+ function qxlogin() {
+
+     document.getElementById("bg").style.display='none';
+ }
+</script>
+<body>
+
+<!-- nav部分 -->
+
+<!-- banner部分 -->
+
+<div class="bg" id="bg">
+    <div class="login">
+        <form action="/index/index/index" method="post">
+            <input type="hidden" name="dopost" value="post">
+            <p>账号：<input type="text" name="name"></p>
+            <p>密码：<input type="password" name="password"></p>
+            <p><input type="submit" value="登录"><input type="reset" value="取消" style="margin-left: 20px;"> <input
+                    type="button" value="取消登陆" style="margin-left: 20px;" id="qx" onclick="qxlogin()" ></p>
+
+        </form>
+    </div>
+</div>
+<div class="banner product">
+</div>
+<!-- main部分 -->
+
+
+
+<div class="main-product">
+    <div class="layui-container">
+        <p class="title">高效的志愿服务团队<span>团队结构</span></p>
+        <div class="layui-row layui-col-space25">
+            <div class="layui-col-sm6 layui-col-md3" style="margin-left: 100px;">
+                <div class="content" >
+                    <div><img src="{$gybrief}" style="width: 230px;height: 230px;"></div>
+                    <div>
+                        <p class="label">{$gtitle}</p>
+                        <p>{$gcontent}</p>
+                    </div>
+                    <a href="/index/about/about">查看团队 ></a>
+                </div>
+            </div>
+            <div class="layui-col-sm6 layui-col-md3 " style="margin-left: 100px;">
+                <div class="content" >
+                    <div><img src="{$dhbrief}" style="width: 230px;height: 230px;"></div>
+                    <div>
+                        <p class="label">{$dtitle}</p>
+                        <p>{$dcontent}</p>
+                    </div>
+                    <a href="/index/about/about">查看团队 ></a>
+                </div>
+            </div>
+            <div class="layui-col-sm6 layui-col-md3 " style="margin-left: 100px;">
+                <div class="content" >
+                    <div><img src="{$jkbrief}" style="width: 230px;height: 230px;"></div>
+                    <div>
+                        <p class="label">{$jtitle}</p>
+                        <p>{$jcontent}</p>
+                    </div>
+                    <a href="/index/about/about">查看团队 ></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="main-service">
+    <div class="layui-container">
+        <p class="title">活力爱心志愿活动<span>过往精彩</span></p>
+        <div class="layui-row layui-col-space25 layui-col-space80">
+            {$list}
+        </div>
+        <div class="service-more"><a href="/index/wqjc/wqjc">查看更多</a></div>
+    </div>
+</div>
+
+
+<!-- footer部分 -->
+
+<script src="/res/layui/layui.js"></script>
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script>
+    layui.config({
+        base: '/res/static/js/'
+    }).use('firm');
+</script>
+
+</body>
+</html>

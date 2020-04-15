@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>广东理工志愿者管理系统-后台管理</title>
+    <link rel="Shortcut Icon" href="" type="image/x-icon" />
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <style type="text/css">
+        .layui-nav {
+            z-index: 99999999;
+        }
+
+        @media screen and (max-width: 768px) {
+            .layui-layout-left {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+
+    <div class="layui-header">
+        <div class="layui-logo">
+            广东理工志愿者-后台管理
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                  {$name}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="#" data-url="/admin/admin/admima" data-id="4" data-title="修改密码" class="site-demo-active"
+                           data-type="tabAdd">修改密码</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" data-url="/admin/index/index?dopost=tuichu" id="tuichu">注销</a></li>
+        </ul>
+    </div>
+
+    <script>
+        var tui =document.getElementById('tuichu');
+        //根据id找到按钮，添加点击事件
+        tui.onclick=function () {
+
+            var url= tui.getAttribute("data-url");  //获取data-url连接地址
+            location.href=url;//设置点击后跳转页面
+        }
+
+    </script>
+
+
+    <div class="layui-side layui-bg-black dynamic-navigation">
+        <div class="layui-side-scroll site-tree">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+
+
+
+                <li class="layui-nav-item">
+
+                    <a href="#"><i class="layui-icon layui-icon-set-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;管理员</a>
+
+                    <dl class="layui-nav-child">
+
+
+                        <dd><a href="#" data-url="/admin/admin/admin" data-id="1" data-title="管理员" class="site-demo-active" data-type="tabAdd">
+                            <i class="layui-icon layui-icon-picture"></i>&nbsp;&nbsp;&nbsp;&nbsp;管理员
+                        </a></dd>
+
+
+
+                    </dl>
+
+
+                </li>
+
+
+                <li class="layui-nav-item">
+                    <a href="#"><i class="layui-icon layui-icon-about"></i>&nbsp;&nbsp;&nbsp;&nbsp;用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="#" data-url="/admin/member/member" data-id="11" data-title="人员管理" class="site-demo-active" data-type="tabAdd">
+                                <i class="layui-icon layui-icon-friends"></i>&nbsp;&nbsp;&nbsp;&nbsp;人员管理
+                            </a>
+                        </dd>
+                        <dd>
+                            <a href="#" data-url="/admin/member/zx" data-id="12" data-title="招新管理" class="site-demo-active" data-type="tabAdd">
+                                <i class="layui-icon layui-icon-friends"></i>&nbsp;&nbsp;&nbsp;&nbsp;招新管理
+                            </a>
+                        </dd>
+                        <dd>
+                            <a href="#" data-url="/admin/member/acmember" data-id="13" data-title="活动报名人员管理" class="site-demo-active" data-type="tabAdd">
+                                <i class="layui-icon layui-icon-friends"></i>&nbsp;&nbsp;&nbsp;&nbsp;活动报名人员管理
+                            </a>
+                        </dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item">
+
+                    <a href="#"><i class="layui-icon layui-icon-set-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;活动管理</a>
+
+                    <dl class="layui-nav-child">
+
+                        <dd><a href="#" data-url="/admin/accontrol/activity" data-id="21" data-title="发布活动" class="site-demo-active" data-type="tabAdd">
+                            <i class="layui-icon layui-icon-picture"></i>&nbsp;&nbsp;&nbsp;&nbsp;发布活动
+                        </a></dd>
+                        <dd><a href="#" data-url="/admin/accontrol/wqhd" data-id="22" data-title="往期活动" class="site-demo-active" data-type="tabAdd">
+                            <i class="layui-icon layui-icon-picture"></i>&nbsp;&nbsp;&nbsp;&nbsp;往期活动
+                        </a></dd>
+
+
+                    </dl>
+
+
+                </li>think_page_trace_tab_tit
+
+                <li class="layui-nav-item">
+                    <a href="#"><i class="layui-icon layui-icon-about"></i>&nbsp;&nbsp;&nbsp;&nbsp;报告管理</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="#" data-url="/admin/report/brief" data-id="31" data-title="协会介绍" class="site-demo-active" data-type="tabAdd">
+                                <i class="layui-icon layui-icon-friends"></i>&nbsp;&nbsp;&nbsp;&nbsp;协会介绍
+                            </a>
+                        </dd>
+                        <dd>
+                            <a href="#" data-url="/admin/report/liuyan" data-id="32" data-title="留言" class="site-demo-active" data-type="tabAdd">
+                                <i class="layui-icon layui-icon-friends"></i>&nbsp;&nbsp;&nbsp;&nbsp;留言
+                            </a>
+                        </dd>
+
+                    </dl>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 0 15px;">
+            <div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="margin: 0 10px">
+
+                <ul class="layui-tab-title">
+                    <li class="layui-this" lay-id="1">管理员</li>
+                </ul>
+                <ul class="rightmenu" style="display: none;position: absolute;">
+                    <li data-type="closethis">关闭当前</li>
+                    <li data-type="closeall">关闭所有</li>
+                </ul>
+
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe data-frameid="1" scrolling="auto" frameborder="0" src="/admin/admin/admin"
+                                style="width:100%;height:700px;" id="iframe2"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="layui-footer main" style="left:200px;z-index: 999">
+        <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe668;</i></button>
+        <a href="">16级计科7班刘荣业</a>
+    </div>
+    <script src="/layui/layui.js"></script>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var $ = layui.jquery,
+                element = layui.element;
+            element.init();
+            $('body').on('click', '.main>button', () => {
+                var a = $('.dynamic-navigation');
+                // var b = $('.layui-layer-tips');
+                var c = $('.layui-body');
+                var d = $('.layui-footer');
+                a && (a.attr("tg") ? (a.animate({
+                    left: 0,
+                    opacity: "show"
+                }, 500), a.removeAttr("tg"),
+                    /*b.animate({
+                         left: 289,
+                         opacity: "show"
+                       }, 500), */
+                    c.animate({
+                        left: 200,
+                        opacity: "show"
+                    }, 500), d.animate({
+                    left: 200,
+                    opacity: "show"
+                }, 500)) : (a.animate({
+                    left: -200,
+                    opacity: "show"
+                }, 500), a.attr("tg", "1"),
+                    /*b.animate({
+                         left: 89,
+                         opacity: "show"
+                       }, 500), */
+                    c.animate({
+                        left: 0,
+                        opacity: "show"
+                    }, 500), d.animate({
+                    left: 0,
+                    opacity: "show"
+                }, 500)));
+                //分开写了
+                a && (a.attr("tg") ? (
+                    localStorage.setItem('nav-status', 1)
+                ) : (
+                    localStorage.setItem('nav-status', 0)
+                ));
+            });
+            //触发事件
+            var html = '';
+            var active = {
+                tabAdd: function (url, id, name) {
+                    //新增一个Tab项
+                    element.tabAdd('demo', {
+                        title: name,
+                        content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:99%;"></iframe>',
+                        id: id
+                    })
+                    CustomRightClick(id);
+                    FrameWH();
+                },
+                tabDelete: function (id) {
+                    //删除指定Tab项
+                    element.tabDelete('demo', id);
+                },
+                tabChange: function (id) {
+                    //切换到指定Tab项
+                    element.tabChange('demo', id);
+                },
+                tabDeleteAll: function (ids) {
+                    //删除所有
+                    $.each(ids, function (i, item) {
+                        element.tabDelete("demo", item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
+                    })
+                }
+            };
+            $('.site-demo-active').on('click', function () {
+                var dataid = $(this);
+                if ($(".layui-tab-title li[lay-id]").length <= 0) {
+                    active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
+                } else {
+                    var isData = false;
+                    $.each($(".layui-tab-title li[lay-id]"), function () {
+                        if ($(this).attr("lay-id") == dataid.attr("data-id")) {
+                            isData = true;
+                        }
+                    })
+                    if (isData == false) {
+                        active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
+                    }
+                }
+                active.tabChange(dataid.attr("data-id"));
+            });
+
+            function CustomRightClick(id) {
+                $('.layui-tab-title li').on('contextmenu', function () {
+                    return false;
+                })
+                $('.layui-tab-title,.layui-tab-title li').click(function () {
+                    $('.rightmenu').hide();
+                });
+                $('.layui-tab-title li').on('contextmenu', function (e) {
+                    var popupmenu = $(".rightmenu");
+                    popupmenu.find("li").attr("data-id", id);
+                    l = ($(document).width() - e.clientX) < popupmenu.width() ? (e.clientX - popupmenu.width()) : e.clientX;
+                    t = ($(document).height() - e.clientY) < popupmenu.height() ? (e.clientY - popupmenu.height()) : e.clientY;
+                    popupmenu.css({
+                        left: l - 140,
+                        top: t - 75
+                    }).show();
+                    return false;
+                });
+            }
+
+            $(".rightmenu li").click(function () {
+                if ($(this).attr("data-type") == "closethis") {
+                    active.tabDelete($(this).attr("data-id"))
+                } else if ($(this).attr("data-type") == "closeall") {
+                    var tabtitle = $(".layui-tab-title li");
+                    var ids = new Array();
+                    $.each(tabtitle, function (i) {
+                        ids[i] = $(this).attr("lay-id");
+                    })
+                    active.tabDeleteAll(ids);
+                }
+                $('.rightmenu').hide();
+            })
+
+            function FrameWH() {
+                var h = $(window).height() - 41 - 10 - 60 - 10 - 44 - 10 - 44 + 60;
+                $("iframe").css("height", h + "px");
+            }
+
+            $(window).resize(function () {
+                FrameWH();
+            })
+        });
+    </script>
+</body>
+
+</html>

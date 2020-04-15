@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户添加</title>
+</head>
+<link rel="Shortcut Icon" href="" type="image/x-icon" />
+<link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+<script src="/layui/layui.js" charset="utf-8"></script>
+<body>
+<div class="layui-form-item">
+    <!-- 用户信息 开始-->
+    <form class="layui-form" action="" id="form" enctype="multipart/form-data">
+        <input type="hidden" name="dopost" value="update">
+        <input type="hidden" name="act" value="save">
+        <input type="hidden" name="create_time" value="">
+        <input type="hidden" name="id" value="{$id}">
+        <input type="hidden" name="user_id" value="">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">缩略图</label>
+            <div class="layui-input-inline">
+                <img class="layui-img" src="{$img}" id="pic_r" width="auto" height="150px"/>
+                <input type="hidden" name="pic" value="{$img}" id="pic">
+                <button type="button" class="layui-btn layui-btn-danger" id="test1"><i class="layui-icon"></i>上传图片</button>
+                <div class="layui-inline layui-word-aux">
+                    缩略图不能大于10M
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" value="{$title}" placeholder="名称" class="layui-input layui-form-danger" style="width: 500px;">
+            </div>
+        </div>
+
+
+
+<div class="layui-form-item">
+    <label class="layui-form-label">正文</label>
+    <div class="layui-input-inline" >
+        <script id="container" name="content" type="text/plain" >
+        </script>
+    </div>
+</div><span class="layui-inline layui-word-aux"></span>
+
+
+<div class="layui-form-item">
+    <label class="layui-form-label">状态</label>
+    <div class="layui-input-block" style="width: 500px;">
+        <select name="status" lay-filter="status">
+            <option value="显示">显示</option>
+            <option value="删除">删除</option>
+        </select>
+    </div>
+</div>
+
+<div class="layui-form-item">
+    <div class="layui-input-block">
+        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="rankadd" style="pointer-events: auto;">立即提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</div>
+</form>
+</div>
+
+<script src="/edit/ueditor.config.js" language="javascript" type="text/javascript"></script>
+<script src="/edit/ueditor.all.min.js" language="javascript" type="text/javascript"></script>
+<script src="/edit/lang/zh-cn/zh-cn.js" language="javascript" type="text/javascript"></script>
+<script type="text/javascript">
+    var txt = '<?php $str = preg_replace("/[\n\r\t]/", " ", htmlspecialchars_decode($msg["content"])); echo $str; ?>';
+    //UE.getEditor('editor', { zIndex: 100});
+    var ue = UE.getEditor('container',{initialFrameWidth:1000,initalFrameHeight:800,  zIndex: 5});
+    //对编辑器的操作最好在编辑器ready之后再做
+    // UE.getEditor("container",{initialFrameWidth:740,initalFrameHeight:400,});
+    ue.ready(function() {
+        //设置编辑器的内容
+        ue.setContent(txt);
+        //获取html内容，返回: <p>hello</p>
+        var html = ue.getContent();
+    });
+</script>
+<script>
+    layui.use(['form','laypage','layer','upload'], function(){
+        var $ = layui.jquery,upload = layui.upload,form = layui.form;
+        //设定文件大小限制
+        upload.render({
+            elem: '#test1'
+            ,url: '../upload/upload?dopost=brief'
+            ,size: 10240 //限制文件大小，单位 KB
+            ,done: function(res){
+                if(res.code==1){
+                    $("#pic").val('/'+res.data.url);
+                    $("#pic_r").attr("src",'/'+res.data.url);
+                    layer.alert(res.msg,{icon: 6});
+                }else{
+                    layer.alert(res.msg,{icon: 5});
+                }
+                // console.log(res.data.url)
+            }
+        });
+
+
+        form.render();
+        form.on('submit(rankadd)', function(data) {
+            console.log(data);
+            $.ajax({
+                url:"briefpd",
+                data:$('#form').serialize(),
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    console.log(data.code);
+                    if(data.code=='0'){
+                        layer.alert(data.msg, {icon: 6},function(index){
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index)
+                        });
+
+                    }else if(data.code=='2'){
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                    else
+                    {
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                },
+                error:function(data){
+                    // console.log(data);
+                    layer.alert('头疼', {icon: 5});
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+
+</body>
+</html>

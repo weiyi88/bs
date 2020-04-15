@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <title>网络公司-动态详情页</title>
+    <link rel="stylesheet" href="/res/layui/css/layui.css">
+    <link rel="stylesheet" href="/res/static/css/index.css">
+</head>
+<style>
+    .bg{
+
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.2);
+        z-index: 99;
+
+    }
+    .login{
+        /*水平居中屏幕效果*/
+        position: fixed;
+        line-height: 40px;
+        width: 300px;
+        height: 120px;
+        margin-left: -150px;
+        /*先让盒子居中50%，再距离自己宽度一半*/
+        top: 200px;
+        left: 50%;
+        background-color: white;
+    }
+</style>
+
+<script>
+    function back() {
+        document.getElementById('bg').style.display='block';
+    }
+
+    function qxlogin() {
+
+        document.getElementById("bg").style.display='none';
+    }
+</script>
+<body>
+<!-- nav部分 -->
+
+<!-- main部分 -->
+<div class="bg" id="bg">
+    <div class="login">
+        <form action="/index/index/index" method="post">
+            <input type="hidden" name="dopost" value="post">
+            <p>账号：<input type="text" name="name"></p>
+            <p>密码：<input type="password" name="password"></p>
+            <p><input type="submit" value="登录"><input type="reset" value="取消" style="margin-left: 20px;"> <input
+                    type="button" value="取消登陆" style="margin-left: 20px;" id="qx" onclick="qxlogin()" ></p>
+
+        </form>
+    </div>
+</div>
+<div class="main-newsdate">
+    <div class="layui-container">
+        <p class="news"><a href="/index/wqjc/wqjc?id={$id}">{$type}</a>  {$title}</p>
+        <h1>{$title}</h1>
+        {$content}
+
+    </div>
+</div>
+<!-- footer部分 -->
+
+<script src="/res/layui/layui.js"></script>
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script>
+    layui.config({
+        base: '/res/static/js/'
+    }).use('firm');
+</script>
+
+</body>
+</html>
